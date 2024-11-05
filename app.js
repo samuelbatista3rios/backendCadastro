@@ -19,6 +19,7 @@ const db = mysql.createPool({
 app.use(bodyParser.json());
 app.use(cors());
 
+
 app.post("/register", (req, res) => {
     const { PRIMEIRO_NOME, ULTIMO_NOME, EMAIL, SENHA } = req.body;
     const dispositivo = req.ip; // Pega o IP do dispositivo
