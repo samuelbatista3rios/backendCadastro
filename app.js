@@ -1,24 +1,22 @@
-// backend/app.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mysql = require("mysql2");
 
 const app = express();
-const port = 3500;
+const port = process.env.PORT || 3500; // Vercel define a porta através da variável de ambiente
 
 // Configuração do MySQL
 const db = mysql.createPool({
-    host: "sql101.infinityfree.com",
-    user: "if0_37651603",           // Usuário do MySQL
-    password: "YDahcFSsY8ys",           // Senha do MySQL (vazia para XAMPP padrão)
-    database: "if0_37651603_unifi_registro" // Nome do banco de dados
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 // Middlewares
 app.use(bodyParser.json());
 app.use(cors());
-
 
 app.post("/register", (req, res) => {
     const { PRIMEIRO_NOME, ULTIMO_NOME, EMAIL, SENHA } = req.body;
@@ -40,6 +38,9 @@ app.post("/register", (req, res) => {
     });
 });
 
+// Exporta o app para que o Vercel possa usar
+module.exports = app;
+/*
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
-});
+});*/
